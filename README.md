@@ -2,19 +2,18 @@
 
 Providing speech recognition services. Based on <https://github.com/mozilla/DeepSpeech-examples/tree/r0.7/web_microphone_websocket>
 
-Because the training data is so big, it is built using `Dockerfile.training-data` creating a local cache of the data, meaning that the `Dockerfile` can be edited with impunity without causing a long slow download. Therefor `korerorero-training-data:latest` is a dependency of `korerorero-speech-recognition`.
+Because the training data is so big, it is built in a stage labelled as `training-data` in the Dockerfie, meaning that the `Dockerfile` can be edited with impunity without causing a long slow download. More info on multi-stage builds: <https://docs.docker.com/develop/develop-images/multistage-build/>
 
 ## To build
 
 ```bash
-docker build -f Dockerfile.training-data -t korerorero-training-data .
 docker build . -t korerorero-speech-recognition
 ```
 
 ## To run
 
 ```bash
-docker run -p 4000:4000 korerorero-speech-recognition:latest
+docker run --init -p 4000:4000 korerorero-speech-recognition:latest
 ```
 
 You should see something like this:
